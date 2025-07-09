@@ -1,1 +1,8 @@
-<p>menu works!</p>
+<section role="region" aria-labelledby="menuTitle">
+    <h1 id="menuTitle">Pizza Menu</h1>
+    <div role="list" aria-label="Pizza list">
+        @for(menuItem of menuItems; track menuItem.itemId){
+        <app-menu-item></app-menu-item>
+        }
+    </div>
+</section>
