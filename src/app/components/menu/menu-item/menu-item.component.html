@@ -1,0 +1,18 @@
+<div>
+    <div>
+        <h2>{{item.name}}</h2>
+    </div>
+
+    @if(isOpen) {
+    @for(size of sizes; track size.sizeId) {
+    <!-- <div>
+        <app-reactive-checkbox></app-reactive-checkbox>
+        <p>{{size.name}}: {{getPrice(item.itemId, size.sizeId) | currency:'USD'}}</p>
+    </div> -->
+    <app-number-input [disabled]="!isSizeEnabled(size.sizeId)" [ngModel]="getPrice(size.sizeId)"
+        (ngModelChange)="onPriceChanged(size.sizeId, $event)">
+    </app-number-input>
+    }
+
+    }
+</div>
