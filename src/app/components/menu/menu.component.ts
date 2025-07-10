@@ -1,42 +1,32 @@
-import { Component } from '@angular/core';
-import { combineLatest, map, Observable } from 'rxjs';
-import { PizzaItemView } from '../../models/item';
+import { AsyncPipe } from '@angular/common';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { Price } from '../../models/price';
-import { Size } from '../../models/size';
 import { DataService } from '../../services/data.service';
 import { MenuItemComponent } from './menu-item/menu-item.component';
-import { AsyncPipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ViewPizzaItem } from '../../models/item';
 
 @Component({
   selector: 'app-menu',
-  imports: [MenuItemComponent, AsyncPipe],
+  // imports: [MenuItemComponent, AsyncPipe],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
-export class MenuComponent {
-  viewModel$: Observable<{ sizes: Size[]; pizzaItems: PizzaItemView[]; }>;
-  private storageKey = 'pizzaPrices';
 
+export class MenuComponent {
+  private storageKey = 'pizzaPrices';
+  private destroyRef = inject(DestroyRef);
+  pizzaItems: ViewPizzaItem[] = [];
   constructor(
     private dataService: DataService
-  ) {
-    this.viewModel$ = combineLatest([
-      this.dataService.getItems(),
-      this.dataService.getPrices(),
-      this.dataService.getSizes()
-    ]).pipe(
-      map(([items, apiPrices, sizes]) => {
-        const storedPrices = this.getStoredPrices();
-        const mergedPrices = this.mergePrices(apiPrices, storedPrices);
+  ) { }
 
-        const pizzaItems: PizzaItemView[] = items.map(item => ({
-          item,
-          prices: mergedPrices.filter(p => p.itemId === item.itemId)
-        }));
+  ngOnInit() {
+    this.dataService.getMenu().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(menu => {
+      this.pizzaItems = menu;
+      console.log(this.pizzaItems);
 
-        return { sizes, pizzaItems };
-      })
-    );
+    });
   }
 
   onItemUpdated(itemId: number, updatedPrices: Price[]) {

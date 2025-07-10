@@ -1,11 +1,12 @@
-import { Price } from "./price";
+import { Price, ViewSizePrice } from "./price";
 
 export interface PizzaItem {
     itemId: number;
     name: string;
 }
 
-export interface PizzaItemView {
-    item: PizzaItem;
-    prices: Price[];
+export interface ViewPizzaItem {
+    itemId: number;
+    name: string;
+    sizes: ViewSizePrice[];
 }

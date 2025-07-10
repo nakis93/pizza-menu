@@ -3,3 +3,9 @@ export interface Price {
     sizeId: number;
     price: number;
 }
+
+export interface ViewSizePrice {
+    sizeId: number;
+    name: string;
+    price: number;
+}

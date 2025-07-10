@@ -1,10 +1,11 @@
 <section role="region" aria-labelledby="menuTitle">
     <h1 id="menuTitle">Pizza Menu</h1>
     <div role="list" aria-label="Pizza list">
-        @for (pizzaItem of (viewModel$ | async)?.pizzaItems; track pizzaItem.item.itemId) {
-        <app-menu-item [item]="pizzaItem.item" [prices]="pizzaItem.prices" [sizes]="(viewModel$ | async)!.sizes"
+        @for (pizzaItem of pizzaItems; track pizzaItem.itemId) {
+        <!-- <app-menu-item [item]="pizzaItem.item" [prices]="pizzaItem.prices" [sizes]="(viewModel$ | async)!.sizes"
             (itemUpdated)="onItemUpdated(pizzaItem.item.itemId, $event)">
-        </app-menu-item>
+        </app-menu-item> -->
+        <div>{{pizzaItem.name}}</div>
         }
     </div>
 </section>
