@@ -1,2 +1,5 @@
-<input type="number" [value]="value" [disabled]="disabled" [step]="step" [min]="min" [max]="max"
-    (input)="onInputChange($event)" />
+<div class="price-input-wrapper">
+    <span class="currency-prefix">$</span>
+    <input type="number" class="price-input" [value]="value" [disabled]="disabled" [step]="step" [min]="min" [max]="max"
+        (input)="onInputChange($event)" />
+</div>
