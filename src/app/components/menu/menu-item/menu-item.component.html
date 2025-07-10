@@ -5,9 +5,10 @@
     <section class="menu-item-body" role="region" [hidden]="!isOpen">
         @for(size of sizePrices; track size.sizeId) {
         <div class="row">
-            <app-checkbox [ngModel]="isSizeEnabled(size.sizeId)" (ngModelChange)="onSizeToggled(size.sizeId, $event)">
+            <span>{{ size.enabled }}</span>
+            <app-checkbox [ngModel]="size.enabled" (ngModelChange)="onSizeToggled(size.sizeId, $event)">
             </app-checkbox>
-            <app-number-input [disabled]="!isSizeEnabled(size.sizeId)" [ngModel]="size.price"
+            <app-number-input [disabled]="!size.enabled" [ngModel]="size.price"
                 (ngModelChange)="onPriceChanged(size.sizeId, $event)">
             </app-number-input>
         </div>

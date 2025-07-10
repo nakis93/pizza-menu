@@ -8,4 +8,5 @@ export interface ViewSizePrice {
     sizeId: number;
     name: string;
     price: number;
+    enabled: boolean;
 }

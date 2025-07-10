@@ -1,4 +1,4 @@
-import { Price, ViewSizePrice } from "./price";
+import { ViewSizePrice } from "./price";
 
 export interface PizzaItem {
     itemId: number;
