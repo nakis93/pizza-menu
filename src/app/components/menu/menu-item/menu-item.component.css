@@ -21,6 +21,10 @@
     width: 100%;
 }
 
+.menu-item-header img {
+    margin-right: 0.5rem;
+}
+
 .price-row {
     margin-top: 1rem;
     display: flex;
@@ -60,14 +64,21 @@ section {
 .undo-button {
     margin-top: 0;
     align-self: flex-end;
-    background-color: #e00;
+    background-color: white;
     color: white;
-    border: none;
+    border: 1px solid #6190a8;
     border-radius: 50%;
-    padding: 1rem;
+    padding: 0.5rem;
     cursor: pointer;
 }
 
 .undo-button:focus-visible {
     outline: 3px solid #0078d7;
+}
+
+.undo-icon {
+    width: 30px;
+    height: 30px;
+    display: block;
+    filter: invert(39%) sepia(21%) saturate(513%) hue-rotate(178deg) brightness(91%) contrast(87%);
 }

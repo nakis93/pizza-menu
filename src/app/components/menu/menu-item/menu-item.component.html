@@ -1,10 +1,13 @@
 <div class="menu-item" [class.open]="isOpen">
-    <button class="menu-item-header" type="button" [attr.aria-expanded]="isOpen" (click)="toggle.emit()">
+    <button class="menu-item-header" type="button" [attr.aria-expanded]="isOpen"
+        [attr.aria-controls]="'panel-' + item.itemId" id="'accordion-button-' + item.itemId" (click)="toggle.emit()">
+        <img [src]="isOpen ? 'assets/svgs/arrow-up.svg' : 'assets/svgs/arrow-down.svg'" alt="" width="16" height="16"
+            aria-hidden="true" />
         {{ item.name }}
     </button>
 
     @if (isOpen) {
-    <section role="region">
+    <section id="'panel-' + item.itemId" role="region" [attr.aria-labelledby]="'accordion-button-' + item.itemId">
         <div class="price-row">
             @for (size of sizePrices; track size.sizeId) {
             <div class="prices">
@@ -19,12 +22,7 @@
 
         @if (hasChanges) {
         <button type="button" class="undo-button" (click)="undoChanges()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"
-                focusable="false">
-                <path d="M3 12a9 9 0 0115.36-6.36L21 9" />
-                <path d="M3 12v6h6" />
-            </svg>
+            <img src="assets/svgs/undo.svg" alt="Undo" class="undo-icon" />
         </button>
         }
     </section>
