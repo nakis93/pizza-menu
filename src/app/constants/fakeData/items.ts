@@ -1,6 +1,7 @@
-import { Item } from "../../models/item";
+import { PizzaItem } from "../../models/item";
 
-export const items: Item[] = [
+
+export const items: PizzaItem[] = [
     {
         itemId: 0,
         name: 'Margherita'

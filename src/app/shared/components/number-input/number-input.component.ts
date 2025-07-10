@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-number-input',
@@ -14,7 +14,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class NumberInputComponent {
+export class NumberInputComponent implements ControlValueAccessor {
   @Input() step = 0.01;
   @Input() min = 0;
   @Input() max = 9999;

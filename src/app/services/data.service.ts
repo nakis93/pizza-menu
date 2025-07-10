@@ -3,9 +3,9 @@ import { itemSizes } from '../constants/fakeData/sizes';
 import { itemPrices } from '../constants/fakeData/prices';
 import { items } from '../constants/fakeData/items';
 import { Observable, of } from 'rxjs';
-import { Item } from '../models/item';
 import { Price } from '../models/price';
 import { Size } from '../models/size';
+import { PizzaItem } from '../models/item';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class DataService {
   items = items;
   constructor() { }
 
-  getItems(): Observable<Item[]> {
+  getItems(): Observable<PizzaItem[]> {
     return of(items);
   }
 

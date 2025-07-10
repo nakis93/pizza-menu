@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+.menu-item-header {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    text-align: left;
+    width: 100%;
+}
+
+.menu-item-header:focus-visible {
+    outline: 3px solid #0078d7;
+    outline-offset: 2px;
+}
+
+.menu-item-body {
+    padding: 1rem;
+    border-top: 1px solid #ccc;
+}
+
+.undo-button {
+    margin-top: 1rem;
+    background-color: #e00;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.undo-button:focus-visible {
+    outline: 3px solid #0078d7;
+}
