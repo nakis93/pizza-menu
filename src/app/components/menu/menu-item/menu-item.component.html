@@ -5,7 +5,6 @@
     <section class="menu-item-body" role="region" [hidden]="!isOpen">
         @for(size of sizePrices; track size.sizeId) {
         <div class="row">
-            <span>{{ size.enabled }}</span>
             <app-checkbox [ngModel]="size.enabled" (ngModelChange)="onSizeToggled(size.sizeId, $event)">
             </app-checkbox>
             <app-number-input [disabled]="!size.enabled" [ngModel]="size.price"

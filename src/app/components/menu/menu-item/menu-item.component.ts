@@ -32,13 +32,38 @@ export class MenuItemComponent {
   onPriceChanged(sizeId: number, newPrice: number): void {
     this.dataService.updatePrice(this.item.itemId, sizeId, newPrice);
     this.hasChanges = true;
+    this.detectChanges();
   }
 
   undoChanges(): void {
+    this.dataService.resetItem(this.item.itemId);
+    this.hasChanges = false;
   }
 
   onSizeToggled(sizeId: number, enabled: boolean) {
     this.dataService.updateSize(this.item.itemId, sizeId, enabled);
+    if (enabled) {
+      return;
+    }
+    this.dataService.updatePrice(this.item.itemId, sizeId, 0);
+    this.detectChanges();
   }
+
+  detectChanges(): void {
+    const originalItem = this.dataService.getOriginalItem(this.item.itemId);
+    if (!originalItem) {
+      this.hasChanges = false;
+      return;
+    }
+    this.hasChanges = this.item.sizes.some(currentSize => {
+      const originalSize = originalItem.sizes.find(s => s.sizeId === currentSize.sizeId);
+      if (!originalSize) return true;
+      return (
+        originalSize.price !== currentSize.price ||
+        originalSize.enabled !== currentSize.enabled
+      );
+    });
+  }
+
 
 }

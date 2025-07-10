@@ -13,6 +13,8 @@ export class DataService {
   itemSizes = itemSizes;
   prices = itemPrices;
   items = items;
+
+  private defaultPizzaMenu: ViewPizzaItem[] = [];
   private _pizzaMenu$ = new BehaviorSubject<ViewPizzaItem[]>(this.loadFromLocalStorage());
   get pizzaMenu$() {
     return this._pizzaMenu$.asObservable();
@@ -36,8 +38,10 @@ export class DataService {
     const savedMenu = this.loadFromLocalStorage();
     if (savedMenu && savedMenu.length > 0) {
       this._pizzaMenu$.next(savedMenu);
+      this.buildOriginalMenu();
       return of(savedMenu);
-    } else {
+    }
+    else {
       return of({
         items: this.items,
         prices: this.prices,
@@ -62,6 +66,7 @@ export class DataService {
               sizes: sizesWithPrices,
             };
           });
+          this.defaultPizzaMenu = JSON.parse(JSON.stringify(transformedMenu));
           this.saveToLocalStorage(transformedMenu);
           this._pizzaMenu$.next(transformedMenu);
           return transformedMenu;
@@ -69,6 +74,7 @@ export class DataService {
       );
     }
   }
+
 
   updatePrice(itemId: number, sizeId: number, newPrice: number): void {
     const currentMenu = this._pizzaMenu$.getValue();
@@ -91,6 +97,44 @@ export class DataService {
     this.saveToLocalStorage(currentMenu);
     this._pizzaMenu$.next([...currentMenu]);
   }
+
+  resetItem(itemId: number): void {
+    const currentMenu = this._pizzaMenu$.getValue();
+    const originalItem = this.defaultPizzaMenu.find(i => i.itemId === itemId);
+    const currentIndex = currentMenu.findIndex(i => i.itemId === itemId);
+    if (originalItem && currentIndex !== -1) {
+      currentMenu[currentIndex] = JSON.parse(JSON.stringify(originalItem));
+      this.saveToLocalStorage(currentMenu);
+      this._pizzaMenu$.next([...currentMenu]);
+    }
+  }
+
+  getOriginalItem(itemId: number): ViewPizzaItem | undefined {
+    return this.defaultPizzaMenu.find(item => item.itemId === itemId);
+  }
+
+  private buildOriginalMenu(): void {
+    const sizeMap = new Map<number, string>();
+    this.itemSizes.forEach(size => sizeMap.set(size.sizeId, size.name));
+    const transformedMenu: ViewPizzaItem[] = this.items.map(item => {
+      const pricesForItem = this.prices.filter(p => p.itemId === item.itemId);
+      const sizesWithPrices: ViewSizePrice[] = pricesForItem.map(price => {
+        return {
+          sizeId: price.sizeId,
+          price: price.price,
+          name: sizeMap.get(price.sizeId) || '',
+          enabled: true
+        };
+      });
+      return {
+        itemId: item.itemId,
+        name: item.name,
+        sizes: sizesWithPrices,
+      };
+    });
+    this.defaultPizzaMenu = JSON.parse(JSON.stringify(transformedMenu));
+  }
+
 
 
 }
