@@ -10,7 +10,7 @@ export const itemSizes: Size[] = [
         name: 'Medium'
     },
     {
-        sizeId: 0,
+        sizeId: 2,
         name: 'Large'
     }
 ];
