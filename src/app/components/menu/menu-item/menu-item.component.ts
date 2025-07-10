@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NumberInputComponent } from '../../../shared/components/number-input/number-input.component';
-import { Price } from '../../../models/price';
+import { Price, ViewSizePrice } from '../../../models/price';
 import { Size } from '../../../models/size';
-import { PizzaItem } from '../../../models/item';
+import { PizzaItem, ViewPizzaItem } from '../../../models/item';
 import { CheckboxComponent } from '../../../shared/components/checkbox/checkbox.component';
 
 @Component({
@@ -14,7 +14,11 @@ import { CheckboxComponent } from '../../../shared/components/checkbox/checkbox.
   styleUrl: './menu-item.component.css'
 })
 export class MenuItemComponent {
-  @Input() item!: PizzaItem;
+  @Input() sizePrices: ViewSizePrice[] = [];
+  @Input() item: ViewPizzaItem = { itemId: 0, name: '', sizes: [] };
+
+  //////////////////////////////
+
   @Input() sizes: Size[] = [];
   @Input() prices: Price[] = [];
   @Output() itemUpdated = new EventEmitter<Price[]>();
@@ -27,6 +31,7 @@ export class MenuItemComponent {
 
 
   ngOnInit(): void {
+    console.log(this.sizePrices);
     this.originalPrices = this.prices.map(p => ({ ...p }));
     for (const price of this.prices) {
       this.priceMap.set(price.sizeId, price.price);

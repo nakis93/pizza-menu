@@ -1,18 +1,17 @@
 <div class="menu-item">
-    <button class="menu-item-header" type="button" [attr.aria-expanded]="isOpen"
-        [attr.aria-controls]="'section-' + item.itemId" id="accordion-header-{{ item.itemId }}"
-        (click)="toggleAccordion()">
+    <button class="menu-item-header" type="button" [attr.aria-expanded]="isOpen" (click)="toggleAccordion()">
         {{ item.name }}
     </button>
-    <section [id]="'section-' + item.itemId" class="menu-item-body" role="region"
-        [attr.aria-labelledby]="'accordion-header-' + item.itemId" [hidden]="!isOpen">
-        <div *ngFor="let size of sizes" class="row">
+    <section class="menu-item-body" role="region" [hidden]="!isOpen">
+        @for(size of sizePrices; track size.sizeId) {
+        <div class="row">
             <app-checkbox [ngModel]="isSizeEnabled(size.sizeId)" (ngModelChange)="onSizeToggled(size.sizeId, $event)">
             </app-checkbox>
-            <app-number-input [disabled]="!isSizeEnabled(size.sizeId)" [ngModel]="getPrice(size.sizeId)"
+            <app-number-input [disabled]="!isSizeEnabled(size.sizeId)" [ngModel]="size.price"
                 (ngModelChange)="onPriceChanged(size.sizeId, $event)">
             </app-number-input>
         </div>
+        }
         @if(hasChanges)
         {
         <button type="button" class="undo-button" (click)="undoChanges()">

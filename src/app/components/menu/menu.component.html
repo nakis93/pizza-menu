@@ -2,10 +2,9 @@
     <h1 id="menuTitle">Pizza Menu</h1>
     <div role="list" aria-label="Pizza list">
         @for (pizzaItem of pizzaItems; track pizzaItem.itemId) {
-        <!-- <app-menu-item [item]="pizzaItem.item" [prices]="pizzaItem.prices" [sizes]="(viewModel$ | async)!.sizes"
-            (itemUpdated)="onItemUpdated(pizzaItem.item.itemId, $event)">
-        </app-menu-item> -->
-        <div>{{pizzaItem.name}}</div>
+        <app-menu-item [item]="pizzaItem" [sizePrices]="pizzaItem.sizes">
+        </app-menu-item>
+        <!-- <div>{{pizzaItem.name}}</div> -->
         }
     </div>
 </section>
