@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ViewPizzaItem } from '../../../models/item';
 import { ViewSizePrice } from '../../../models/price';
@@ -16,18 +16,14 @@ import { NumberInputComponent } from '../../../shared/components/number-input/nu
 export class MenuItemComponent {
   @Input() sizePrices: ViewSizePrice[] = [];
   @Input() item: ViewPizzaItem = { itemId: 0, name: '', sizes: [] };
+  @Input() isOpen = false;
+  @Output() toggle = new EventEmitter<void>();
 
-  isOpen = false;
   hasChanges = false;
 
   constructor(
     private dataService: DataService
   ) { }
-
-
-  toggleAccordion(): void {
-    this.isOpen = !this.isOpen;
-  }
 
   onPriceChanged(sizeId: number, newPrice: number): void {
     this.dataService.updatePrice(this.item.itemId, sizeId, newPrice);
@@ -63,6 +59,10 @@ export class MenuItemComponent {
         originalSize.enabled !== currentSize.enabled
       );
     });
+  }
+
+  toggleAccordion(): void {
+    this.toggle.emit();
   }
 
 

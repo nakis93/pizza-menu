@@ -2,7 +2,8 @@
     <h1 id="menuTitle">Pizza Menu</h1>
     <div role="list" aria-label="Pizza list">
         @for (pizzaItem of pizzaItems; track pizzaItem.itemId) {
-        <app-menu-item [item]="pizzaItem" [sizePrices]="pizzaItem.sizes">
+        <app-menu-item [item]="pizzaItem" [sizePrices]="pizzaItem.sizes" [isOpen]="openedItemId === pizzaItem.itemId"
+            (toggle)="toggleItem(pizzaItem.itemId)">
         </app-menu-item>
         }
     </div>

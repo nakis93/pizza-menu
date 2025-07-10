@@ -1,22 +1,32 @@
-<div class="menu-item">
-    <button class="menu-item-header" type="button" [attr.aria-expanded]="isOpen" (click)="toggleAccordion()">
+<div class="menu-item" [class.open]="isOpen">
+    <button class="menu-item-header" type="button" [attr.aria-expanded]="isOpen" (click)="toggle.emit()">
         {{ item.name }}
     </button>
-    <section class="menu-item-body" role="region" [hidden]="!isOpen">
-        @for(size of sizePrices; track size.sizeId) {
-        <div class="row">
-            <app-checkbox [ngModel]="size.enabled" (ngModelChange)="onSizeToggled(size.sizeId, $event)">
-            </app-checkbox>
-            <app-number-input [disabled]="!size.enabled" [ngModel]="size.price"
-                (ngModelChange)="onPriceChanged(size.sizeId, $event)">
-            </app-number-input>
+
+    @if (isOpen) {
+    <section role="region">
+        <div class="price-row">
+            @for (size of sizePrices; track size.sizeId) {
+            <div class="prices">
+                <app-checkbox [ngModel]="size.enabled"
+                    (ngModelChange)="onSizeToggled(size.sizeId, $event)"></app-checkbox>
+                <span class="size-label">{{ size.name }}</span>
+                <app-number-input [disabled]="!size.enabled" [ngModel]="size.price"
+                    (ngModelChange)="onPriceChanged(size.sizeId, $event)"></app-number-input>
+            </div>
+            }
         </div>
-        }
-        @if(hasChanges)
-        {
+
+        @if (hasChanges) {
         <button type="button" class="undo-button" (click)="undoChanges()">
-            Undo
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"
+                focusable="false">
+                <path d="M3 12a9 9 0 0115.36-6.36L21 9" />
+                <path d="M3 12v6h6" />
+            </svg>
         </button>
         }
     </section>
+    }
 </div>

@@ -12,6 +12,7 @@ import { MenuItemComponent } from './menu-item/menu-item.component';
 })
 
 export class MenuComponent {
+  openedItemId: number | null = null;
   private destroyRef = inject(DestroyRef);
   pizzaItems: ViewPizzaItem[] = [];
   constructor(
@@ -27,6 +28,10 @@ export class MenuComponent {
         this.pizzaItems = menu;
       });
     }
+  }
+
+  toggleItem(itemId: number) {
+    this.openedItemId = this.openedItemId === itemId ? null : itemId;
   }
 
 }
